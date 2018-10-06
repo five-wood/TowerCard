@@ -13,6 +13,7 @@ public class DragUI : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHa
     private GameObject root;
     private Card card;
 
+
     public void Start() {
         root = transform.FindChild("Root").gameObject;
     }
@@ -73,14 +74,17 @@ public class DragUI : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHa
         m_DraggingIcons[eventData.pointerId] = null;
         root.SetActive(true);
 
-        if(EventSystem.current.IsPointerOverGameObject()) {
-            Debug.Log(EventSystem.current.gameObject.tag);
+        RaycastHit hitInfo;
+        var ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+        if(Physics.Raycast(ray, out hitInfo)) {
             if(card == null) {
-                card = gameObject.GetComponentInChildren<Card>();
+                Player player = GameMgr.ins.playerList[0];
+                card = player.GetHandCard(int.Parse(gameObject.name));
             }
-            if(card.IsHitTarget(EventSystem.current.gameObject.tag)) {
+            Debug.Log("Tag = " + hitInfo.collider.gameObject.tag);
+            if(card.IsHitTarget(hitInfo.collider.gameObject.tag)) {
                 Debug.Log("执行卡牌效果");
-                card.Action();
+                GameMgr.ins.UseCard(card,0,-1,null);
             }
         }
     }
@@ -100,4 +104,5 @@ public class DragUI : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHa
         }
         return comp;
     }
+
 }

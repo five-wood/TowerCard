@@ -16,8 +16,8 @@ public class Player : MonoBehaviour {
 
     public void InitCardList() {
         for(int i = 0; i < 15; i++) {
-            int randId = i;
-            if(i >= 13) {
+            int randId = i + 1001;
+            if(i >= 12) {
                 randId = Random.Range(1,13) + 1000;
             }
             Card card = CardMgr.ins.createCard(randId);
@@ -39,6 +39,7 @@ public class Player : MonoBehaviour {
             curCardPosList.Add(randomPos);
             cardList[randomPos].state = Card.CARD_STATE_INHAND;
             GameObject go = Instantiate(cardPrefab,root);
+            go.name = i.ToString();
             cardList[randomPos].InitGameObject(go);
         }
     }
@@ -58,4 +59,20 @@ public class Player : MonoBehaviour {
         cardList[randPos].InitGameObject(go);
     }
 
+    public void RemoveHandCard(Card card) {
+        int pos = -1;
+        for(int i = 0; i < curCardPosList.Count; i++) {
+            if(cardList[curCardPosList[i]].id == card.id) {
+                cardList[curCardPosList[i]].state = Card.CARD_STATE_DISABLED;
+                pos = i;
+            }
+        }
+        if(pos >= 0) {
+            cardList.RemoveAt(pos);
+        }
+    }
+
+    public Card GetHandCard(int pos) {
+        return cardList[curCardPosList[pos]];
+    }
 }
