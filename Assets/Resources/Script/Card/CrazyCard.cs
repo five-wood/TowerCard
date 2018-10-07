@@ -40,6 +40,7 @@ public class CrazyCard : Card {
         SceneMgr.ins.UpdateMonsterAttack(targetId,1/damageFactor);
         SceneMgr.ins.UpdateMonsterScale(targetId,1/ scaleFactor);
         SceneMgr.ins.RemoveCardEffectDelegate(UpdateMonsterAttr);
+        target = -1;
         isUse = false;
     }
 

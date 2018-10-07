@@ -74,9 +74,10 @@ public class DragUI : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHa
         m_DraggingIcons[eventData.pointerId] = null;
         root.SetActive(true);
 
-        RaycastHit hitInfo;
+        RaycastHit2D hitInfo;
         var ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-        if(Physics.Raycast(ray, out hitInfo)) {
+        hitInfo = Physics2D.GetRayIntersection(ray);
+        if(hitInfo) {
             if(card == null) {
                 Player player = GameMgr.ins.playerList[0];
                 card = player.GetHandCard(int.Parse(gameObject.name));
@@ -84,12 +85,13 @@ public class DragUI : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHa
             Debug.Log("Tag = " + hitInfo.collider.gameObject.tag);
             if(card.IsHitTarget(hitInfo.collider.gameObject.tag) && GameMgr.ins.energy >= card.cost) {
                 GameMgr.ins.UpdateEnergy(GameMgr.ins.energy - card.cost);
-                int targetId = int.Parse(hitInfo.collider.gameObject.tag.Substring(hitInfo.collider.gameObject.tag.Length-1));
+                int targetId = int.Parse(hitInfo.collider.gameObject.tag.Substring(hitInfo.collider.gameObject.tag.Length - 1));
                 Debug.Log("targetid = " + targetId);
                 GameMgr.ins.playerList[0].RemoveHandCard(card);
                 GameMgr.ins.UseCard(card,0,targetId,null);
             }
         }
+
     }
 
     static public T FindInParents<T>(GameObject go) where T : Component {

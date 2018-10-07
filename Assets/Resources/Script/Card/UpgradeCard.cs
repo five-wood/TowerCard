@@ -14,6 +14,9 @@ public class UpgradeCard : Card {
         state = CARD_STATE_ENABLED;
         tagList = new List<string>();
         tagList.Add("tower1");
+        tagList.Add("tower2");
+        tagList.Add("tower3");
+        tagList.Add("tower0");
         desc = "提升防御塔等级，增强属性";
     }
 
