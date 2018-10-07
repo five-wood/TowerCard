@@ -7,6 +7,7 @@ using System.Text;
 public class CrazyCard : Card {
     public float speedFactor = 2f;
     public float damageFactor = 2f;
+    public float scaleFactor = 1.5f;
     public int target = -1;
     public bool isUse = false;
 
@@ -27,6 +28,7 @@ public class CrazyCard : Card {
         if(!isUse) {
             SceneMgr.ins.UpdateMonsterSpeed(targetId,speedFactor);
             SceneMgr.ins.UpdateMonsterAttack(targetId,damageFactor);
+            SceneMgr.ins.UpdateMonsterScale(targetId,scaleFactor);
             SceneMgr.ins.AddCardEffectDelegate(UpdateMonsterAttr);
             target = targetId;
             isUse = true;
@@ -36,6 +38,7 @@ public class CrazyCard : Card {
     public override void Finish(int srcPlayerId = -1,int targetId = -1,ArrayList param = null) {
         SceneMgr.ins.UpdateMonsterSpeed(targetId,1/speedFactor);
         SceneMgr.ins.UpdateMonsterAttack(targetId,1/damageFactor);
+        SceneMgr.ins.UpdateMonsterScale(targetId,1/ scaleFactor);
         SceneMgr.ins.RemoveCardEffectDelegate(UpdateMonsterAttr);
         isUse = false;
     }
@@ -44,6 +47,7 @@ public class CrazyCard : Card {
         if(pathNum == target) {
             monster.MulAttackFactor(damageFactor);
             monster.MulSpeedFactor(speedFactor);
+            monster.MulScale(scaleFactor);
         }
     }
 }

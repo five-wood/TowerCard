@@ -4,9 +4,10 @@ using UnityEngine;
 using UnityEngine.UI;
 
 public class SceneMgr : MonoBehaviour {
-    public int monsterNumPer=20;  //每条路每一波的怪物数量
+    public int monsterNumPer=16;  //每条路每一波的怪物数量
     public int pathNum=4; //路径数量
     public float genSpeed = 1; //每条路几秒成一个怪物
+    public float perIntervalTime = 20;//每一波间隔时间
     private Dictionary<int, List<Monster>> allMonstersDict = new Dictionary<int, List<Monster>>();
     private GameObject allMonstersGo;
     private GameObject MPrefabGo;
@@ -25,26 +26,30 @@ public class SceneMgr : MonoBehaviour {
 
     private IEnumerator CreatePerMonster()
     {
-        for (int j = 0; j < monsterNumPer; j++) 
+        while(true)
         {
-            for (int i = 0; i < pathNum; i++)
-            {
-                Transform parent = allMonstersGo.transform.GetChild(i);
-                GameObject monsterGo = Instantiate(MPrefabGo);
-                RectTransform rect=monsterGo.GetComponent<RectTransform>();
-                //Debug.LogError("monsterGo.transform.localScale: " + monsterGo.transform.localScale);
-                monsterGo.transform.SetParent(parent);
-                monsterGo.transform.localScale = monsterOriginScale;                
-                Monster monster = MonsterCreator.Create(MonsterType.Base, monsterGo,i);
-                if(_cardEffectDelegates != null) {
-                    _cardEffectDelegates(i,monster);
+            for(int j = 0; j < monsterNumPer; j++) {
+                for(int i = 0; i < pathNum; i++) {
+                    Transform parent = allMonstersGo.transform.GetChild(i);
+                    GameObject monsterGo = Instantiate(MPrefabGo);
+                    RectTransform rect = monsterGo.GetComponent<RectTransform>();
+                    //Debug.LogError("monsterGo.transform.localScale: " + monsterGo.transform.localScale);
+                    monsterGo.transform.SetParent(parent);
+                    monsterGo.transform.localScale = monsterOriginScale;
+                    Monster monster = MonsterCreator.Create(MonsterType.Base,monsterGo,i);
+                    if(_cardEffectDelegates != null) {
+                        _cardEffectDelegates(i,monster);
+                    }
+                    if(!allMonstersDict.ContainsKey(i))
+                        allMonstersDict.Add(i,new List<Monster>());
+                    allMonstersDict[i].Add(monster);
                 }
-                if (!allMonstersDict.ContainsKey(i))
-                    allMonstersDict.Add(i, new List<Monster>());
-                allMonstersDict[i].Add(monster);               
+                yield return new WaitForSeconds(genSpeed);
             }
-            yield return new WaitForSeconds(genSpeed);
+            yield return new WaitForSeconds(perIntervalTime);
         }
+
+        
     }
 
 	// Use this for initialization
@@ -76,6 +81,25 @@ public class SceneMgr : MonoBehaviour {
         }
     }
 
+    public void UpdateMonsterScale(int path,float scaleFactor) {
+        if(!allMonstersDict.ContainsKey(path))
+            return;
+
+        for(int i = 0; i < allMonstersDict[path].Count; i++) {
+            allMonstersDict[path][i].MulScale(scaleFactor);
+        }
+    }
+
+    public void AddMonsterHp(int path,float value) {
+        if(!allMonstersDict.ContainsKey(path))
+            return;
+
+        for(int i = 0; i < allMonstersDict[path].Count; i++) {
+            allMonstersDict[path][i].AddHp(value);
+        }
+    }
+
+
     public void AddCardEffectDelegate(CardEffectDelegate func) {
         if(_cardEffectDelegates == null) {
             _cardEffectDelegates = func;
@@ -90,4 +114,5 @@ public class SceneMgr : MonoBehaviour {
             return;
         _cardEffectDelegates -= func;
     }
+
 }
