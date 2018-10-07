@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class GameMgr : MonoBehaviour {
     public List<Player> playerList;
@@ -8,6 +9,12 @@ public class GameMgr : MonoBehaviour {
     public List<SCardAction> cardActionList;
     public List<int> removeCardActionIdList;
     private static GameMgr _instance;
+
+    public Slider energySlider;
+    public Text energyText;
+    public int energy;
+    public float energyTimeSpan = 5;
+    public float curTime = 0;
 
     void Awake() {
         _instance = this;
@@ -23,6 +30,12 @@ public class GameMgr : MonoBehaviour {
 
     // Update is called once per frame
     void Update () {
+        curTime += Time.deltaTime;
+        if(curTime > energyTimeSpan) {
+            UpdateEnergy(energy + 1);
+            curTime = 0;
+        }
+
         removeCardActionIdList.Clear();
         for(int i = 0; i < cardActionList.Count; i++) {
             int srcId = cardActionList[i].srcId;
@@ -67,5 +80,14 @@ public class GameMgr : MonoBehaviour {
         get {
             return _instance;
         }
+    }
+
+    public void UpdateEnergy(int value) {
+        if(energy >= 10) {
+            return;
+        }
+        energy = value;
+        energySlider.value = energy / 10.0f;
+        energyText.text = energy.ToString();
     }
 }
