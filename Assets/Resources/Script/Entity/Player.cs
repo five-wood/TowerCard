@@ -8,6 +8,8 @@ public class Player : MonoBehaviour {
     public List<int> curCardPosList;
     public GameObject cardPrefab;
     private Transform root;
+    public Base myBase;
+    public List<Tower> towerList;
 
     public void Start() {
         cardList = new List<Card>();

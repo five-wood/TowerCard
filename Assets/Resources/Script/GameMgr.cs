@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 
 public class GameMgr : MonoBehaviour {
-    public List<Player> playerList;
+    public List<Player> playerList;// 0 表示玩家
     public Transform cardArea;
     public List<SCardAction> cardActionList;
     public List<int> removeCardActionIdList;
