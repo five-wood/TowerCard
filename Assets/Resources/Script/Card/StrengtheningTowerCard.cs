@@ -17,7 +17,10 @@ public class StrengtheningTowerCard:Card {
         desc = "增加目标防御塔生命25点";
     }
 
-    public new void Action(int srcPlayerId = -1,int targetId = -1,ArrayList param = null) {
+    public override void Action(int srcPlayerId = -1,int targetId = -1,ArrayList param = null) {
 
+    }
+
+    public override void Finish(int srcPlayerId = -1,int tagetId = -1,ArrayList param = null) {
     }
 }

@@ -17,7 +17,10 @@ public class StrengtheningAllTowerCard : Card {
         desc = "增加自己所有防御塔10点血";
     }
 
-    public new void Action(int srcPlayerId = -1,int targetId = -1, ArrayList param = null) {
+    public override void Action(int srcPlayerId = -1,int targetId = -1, ArrayList param = null) {
 
+    }
+
+    public override void Finish(int srcPlayerId = -1,int tagetId = -1,ArrayList param = null) {
     }
 }

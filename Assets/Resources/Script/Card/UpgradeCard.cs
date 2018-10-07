@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections;
 using System.Linq;
 using System.Text;
 
@@ -16,7 +17,10 @@ public class UpgradeCard : Card {
         desc = "提升防御塔等级，增强属性";
     }
 
-    public new void Action(int srcPlayerId = -1,int targetId = -1,System.Collections.ArrayList param = null) {
+    public override void Action(int srcPlayerId = -1,int targetId = -1,ArrayList param = null) {
 
+    }
+
+    public override void Finish(int srcPlayerId = -1,int tagetId = -1,ArrayList param = null) {
     }
 }

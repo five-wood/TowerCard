@@ -21,7 +21,10 @@ public class SnowstormCard : Card {
         existTime = 3;
     }
 
-    public new void Action(int srcPlayerId = -1,int targetId = -1,ArrayList param = null) {
+    public override void Action(int srcPlayerId = -1,int targetId = -1,ArrayList param = null) {
 
+    }
+
+    public override void Finish(int srcPlayerId = -1,int tagetId = -1,ArrayList param = null) {
     }
 }

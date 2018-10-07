@@ -82,10 +82,12 @@ public class DragUI : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHa
                 card = player.GetHandCard(int.Parse(gameObject.name));
             }
             Debug.Log("Tag = " + hitInfo.collider.gameObject.tag);
-            if(card.IsHitTarget(hitInfo.collider.gameObject.tag)) {
-                Debug.Log("执行卡牌效果");
-                //
-                GameMgr.ins.UseCard(card,0,-1,null);
+            if(card.IsHitTarget(hitInfo.collider.gameObject.tag) && GameMgr.ins.energy >= card.cost) {
+                GameMgr.ins.UpdateEnergy(GameMgr.ins.energy - card.cost);
+                int targetId = int.Parse(hitInfo.collider.gameObject.tag.Substring(hitInfo.collider.gameObject.tag.Length-1));
+                Debug.Log("targetid = " + targetId);
+                GameMgr.ins.playerList[0].RemoveHandCard(card);
+                GameMgr.ins.UseCard(card,0,targetId,null);
             }
         }
     }

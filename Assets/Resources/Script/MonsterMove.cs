@@ -16,6 +16,10 @@ public class MonsterMove : MonoBehaviour
     private Vector3 direction = Vector3.zero;//移动方向 
     private int pathIndex = -1;
 
+    public void setSpeed(float value) {
+        speed = value;
+    }
+
     /// <summary>
     /// 从1开始
     /// </summary>

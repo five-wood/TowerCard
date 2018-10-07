@@ -5,7 +5,7 @@ using UnityEngine;
 public class Player : MonoBehaviour {
     public int id;
     public List<Card> cardList;
-    public List<int> curCardPosList;
+    public int[] curCardPosList;
     public GameObject cardPrefab;
     private Transform root;
     public Base myBase;
@@ -13,7 +13,7 @@ public class Player : MonoBehaviour {
 
     public void Awake() {
         cardList = new List<Card>();
-        curCardPosList = new List<int>();
+        curCardPosList = new int[5];
     }
 
     public void InitCardList() {
@@ -22,7 +22,9 @@ public class Player : MonoBehaviour {
             if(i >= 12) {
                 randId = Random.Range(1,13) + 1000;
             }
+            randId = 1008;
             Card card = CardMgr.ins.createCard(randId);
+            card.pos = i;
             cardList.Add(card);
         }
     }
@@ -38,7 +40,7 @@ public class Player : MonoBehaviour {
                     break;
                 }
             }
-            curCardPosList.Add(randomPos);
+            curCardPosList[i]=randomPos;
             cardList[randomPos].state = Card.CARD_STATE_INHAND;
             GameObject go = Instantiate(cardPrefab,root);
             go.name = i.ToString();
@@ -54,23 +56,29 @@ public class Player : MonoBehaviour {
                 break;
             }
         }
-        
-        curCardPosList.Add(randPos);
+
+        for(int i = 0; i < 5; i++) {
+            if(curCardPosList[i] == -1) {
+                curCardPosList[i] = randPos;
+                break;
+            }
+        }
         cardList[randPos].state = Card.CARD_STATE_INHAND;
         GameObject go = Instantiate(cardPrefab,root);
+        
         cardList[randPos].InitGameObject(go);
     }
 
     public void RemoveHandCard(Card card) {
-        int pos = -1;
-        for(int i = 0; i < curCardPosList.Count; i++) {
-            if(cardList[curCardPosList[i]].id == card.id) {
-                cardList[curCardPosList[i]].state = Card.CARD_STATE_DISABLED;
-                pos = i;
+
+        DestroyImmediate(card.go);
+        card.go = null;
+        card.state = Card.CARD_STATE_DISABLED;
+        for(int i = 0; i < 5; i++) {
+            if(curCardPosList[i] == card.pos) {
+                curCardPosList[i] = -1;
+                break;
             }
-        }
-        if(pos >= 0) {
-            cardList.RemoveAt(pos);
         }
     }
 
