@@ -5,6 +5,7 @@ using UnityEngine.UI;
 
 public class SceneMgr : MonoBehaviour {
     public int monsterNumPer=3;  //每条路每一波的怪物数量
+    public int perIntervalTime = 20;  //每条路每一波的怪物数量
     public int pathNum=4; //路径数量
     public float genSpeed = 6; //每条路几秒成一个怪物
     private Dictionary<int, List<Monster>> allMonstersDict = new Dictionary<int, List<Monster>>();
@@ -20,23 +21,27 @@ public class SceneMgr : MonoBehaviour {
 
     private IEnumerator CreatePerMonster()
     {
-        for (int j = 0; j < monsterNumPer; j++) 
+        while (true)
         {
-            for (int i = 0; i < pathNum; i++)
+            for (int j = 0; j < monsterNumPer; j++)
             {
-                Transform parent = allMonstersGo.transform.GetChild(i);
-                GameObject monsterGo = Instantiate(MPrefabGo);
-                RectTransform rect=monsterGo.GetComponent<RectTransform>();
-                //Debug.LogError("monsterGo.transform.localScale: " + monsterGo.transform.localScale);
-                monsterGo.transform.SetParent(parent);
-                monsterGo.transform.localScale = monsterOriginScale;                
-                Monster monster = MonsterCreator.Create(MonsterType.Base, monsterGo,i);
-                if (!allMonstersDict.ContainsKey(i))
-                    allMonstersDict.Add(i, new List<Monster>());
-                allMonstersDict[i].Add(monster);               
+                for (int i = 0; i < pathNum; i++)
+                {
+                    Transform parent = allMonstersGo.transform.GetChild(i);
+                    GameObject monsterGo = Instantiate(MPrefabGo);
+                    RectTransform rect = monsterGo.GetComponent<RectTransform>();
+                    //Debug.LogError("monsterGo.transform.localScale: " + monsterGo.transform.localScale);
+                    monsterGo.transform.SetParent(parent);
+                    monsterGo.transform.localScale = monsterOriginScale;
+                    Monster monster = MonsterCreator.Create(MonsterType.Base, monsterGo, i);
+                    if (!allMonstersDict.ContainsKey(i))
+                        allMonstersDict.Add(i, new List<Monster>());
+                    allMonstersDict[i].Add(monster);
+                }
+                yield return new WaitForSeconds(genSpeed);
             }
-            yield return new WaitForSeconds(genSpeed);
-        }
+            yield return new WaitForSeconds(perIntervalTime);
+        } 
     }
 
 	// Use this for initialization
