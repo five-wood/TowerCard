@@ -10,11 +10,13 @@ public class BarrierCard : Card {
         cost = 1;
         name = "屏障";
         state = CARD_STATE_ENABLED;
+
         tagList = new List<string>();
         tagList.Add("path1");
         tagList.Add("path2");
         tagList.Add("path3");
-        tagList.Add("path4");
+        tagList.Add("path0");
+
         desc = "设置一道屏障。持续8秒";
         existTime = 8;
     }

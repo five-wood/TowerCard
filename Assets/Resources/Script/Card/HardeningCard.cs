@@ -16,7 +16,7 @@ public class HardeningCard : Card {
         tagList.Add("path1");
         tagList.Add("path2");
         tagList.Add("path3");
-        tagList.Add("path4");
+        tagList.Add("path0");
         desc = "为某一区域的怪物增加生命";
     }
 

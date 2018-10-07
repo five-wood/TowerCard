@@ -17,7 +17,7 @@ public class CrazyCard : Card {
         tagList.Add("path1");
         tagList.Add("path2");
         tagList.Add("path3");
-        tagList.Add("path4");
+        tagList.Add("path0");
         desc = "狂化某一玩家道路的区域的怪物。增加移动速度和伤害";
     }
 

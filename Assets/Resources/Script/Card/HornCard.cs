@@ -14,7 +14,7 @@ public class HornCard : Card {
         tagList.Add("path1");
         tagList.Add("path2");
         tagList.Add("path3");
-        tagList.Add("path4");
+        tagList.Add("path0");
         desc = "让其他玩家的道路出现精英怪";
     }
 

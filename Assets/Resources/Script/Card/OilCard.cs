@@ -15,7 +15,7 @@ public class OilCard:Card {
         tagList.Add("path1");
         tagList.Add("path2");
         tagList.Add("path3");
-        tagList.Add("path4");
+        tagList.Add("path0");
         desc = "在路径的一侧区域覆盖上滚油，持续造成伤害";
         existTime = 3;
     }

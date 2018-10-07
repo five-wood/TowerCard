@@ -17,7 +17,7 @@ public class PortalCard : Card {
         tagList.Add("path1");
         tagList.Add("path2");
         tagList.Add("path3");
-        tagList.Add("path4");
+        tagList.Add("path0");
         desc = "产生一个传送裂缝把目标区域的怪物传送到箭头指向的玩家的路径上";
         existTime = 3;
     }

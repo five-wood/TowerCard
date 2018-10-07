@@ -84,6 +84,7 @@ public class DragUI : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHa
             Debug.Log("Tag = " + hitInfo.collider.gameObject.tag);
             if(card.IsHitTarget(hitInfo.collider.gameObject.tag)) {
                 Debug.Log("执行卡牌效果");
+                //
                 GameMgr.ins.UseCard(card,0,-1,null);
             }
         }

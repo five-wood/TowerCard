@@ -16,7 +16,7 @@ public class SnowstormCard : Card {
         tagList.Add("path1");
         tagList.Add("path2");
         tagList.Add("path3");
-        tagList.Add("path4");
+        tagList.Add("path0");
         desc = "范围减速，造成伤害";
         existTime = 3;
     }

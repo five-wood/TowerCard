@@ -5,6 +5,5 @@ using UnityEngine;
 public class Base {
     public float hp;
     public int id;
-
 	
 }

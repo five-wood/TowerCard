@@ -11,7 +11,7 @@ public class Player : MonoBehaviour {
     public Base myBase;
     public List<Tower> towerList;
 
-    public void Start() {
+    public void Awake() {
         cardList = new List<Card>();
         curCardPosList = new List<int>();
     }
