@@ -18,7 +18,10 @@ public class HornCard : Card {
         desc = "让其他玩家的道路出现精英怪";
     }
 
-    public new void Action(int srcPlayerId = -1,int targetId = -1,ArrayList param = null) {
+    public override void Action(int srcPlayerId = -1,int targetId = -1,ArrayList param = null) {
 
+    }
+
+    public override void Finish(int srcPlayerId = -1,int tagetId = -1,ArrayList param = null) {
     }
 }

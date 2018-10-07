@@ -5,6 +5,7 @@ using UnityEngine.UI;
 
 public abstract class Card  {
     public int id;
+    public int pos;
     public string cardUrl;
     public string desc;
     public int cost;
@@ -25,13 +26,9 @@ public abstract class Card  {
         cost = 0;
     }
 
-    public void Action(int srcPlayerId = -1,int targetId = -1, ArrayList param = null) {
-        
-    }
+    public abstract void Action(int srcPlayerId = -1,int targetId = -1,ArrayList param = null);
 
-    public void Finish(int srcPlayerId = -1,int tagetId = -1,ArrayList param = null) {
-
-    }
+    public abstract void Finish(int srcPlayerId = -1,int tagetId = -1,ArrayList param = null);
 
     public bool IsHitTarget(string tag) {
         return tagList.Contains(tag);
