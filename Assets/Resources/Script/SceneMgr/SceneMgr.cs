@@ -8,6 +8,8 @@ public class SceneMgr : MonoBehaviour {
     public int pathNum=4; //路径数量
     public float genSpeed = 1; //每条路几秒成一个怪物
     public float perIntervalTime = 20;//每一波间隔时间
+
+    private int monsterID = 0;
     private Dictionary<int, List<Monster>> allMonstersDict = new Dictionary<int, List<Monster>>();
     private GameObject allMonstersGo;
     private GameObject MPrefabGo;
@@ -36,8 +38,9 @@ public class SceneMgr : MonoBehaviour {
                     //Debug.LogError("monsterGo.transform.localScale: " + monsterGo.transform.localScale);
                     monsterGo.transform.SetParent(parent);
                     monsterGo.transform.localScale = monsterOriginScale;
-                    Monster monster = MonsterCreator.Create(MonsterType.Base,monsterGo,i);
-                    if(_cardEffectDelegates != null) {
+                    Monster monster = MonsterCreator.Create(MonsterType.Base,monsterGo,i, monsterID);
+                    monsterID++;
+                    if (_cardEffectDelegates != null) {
                         _cardEffectDelegates(i,monster);
                     }
                     if(!allMonstersDict.ContainsKey(i))
@@ -62,6 +65,29 @@ public class SceneMgr : MonoBehaviour {
             return _instance;
         }
     }
+
+    public void DestoryMonster(Monster monster)
+    {
+        List<Monster> monsterList=allMonstersDict[monster.path];
+        int index=-1;
+        for(int i=0;i< monsterList.Count;i++)
+        {
+            if (monsterList[i].id == monster.id)
+            {
+                index = i;
+                return;
+            }
+        }
+        if (index != -1)
+        {
+            Monster monsterTemp=monsterList[index];
+            monsterList.RemoveAt(index);
+            monsterTemp.Destroy();
+            monsterTemp = null;
+        }
+
+    }
+
 
     public void UpdateMonsterSpeed(int path, float speedFactor) {
         if(!allMonstersDict.ContainsKey(path))

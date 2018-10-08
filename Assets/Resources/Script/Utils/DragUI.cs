@@ -74,9 +74,11 @@ public class DragUI : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHa
         m_DraggingIcons[eventData.pointerId] = null;
         root.SetActive(true);
 
-        RaycastHit hitInfo;
+        RaycastHit2D hitInfo;
         var ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-        if(Physics.Raycast(ray, out hitInfo)) {
+        hitInfo = Physics2D.GetRayIntersection(ray);
+        if (hitInfo)
+        {
             if(card == null) {
                 Player player = GameMgr.ins.playerList[0];
                 card = player.GetHandCard(int.Parse(gameObject.name));

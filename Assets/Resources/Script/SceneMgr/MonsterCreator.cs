@@ -6,13 +6,13 @@ using UnityEngine;
 
 class MonsterCreator
 {
-    static public Monster Create(MonsterType type,GameObject go,int pathIndex)
+    static public Monster Create(MonsterType type,GameObject go,int pathIndex,int ID)
     {
         Monster monster = null;
         switch (type)
         {
             case MonsterType.Base:
-                monster = new Monster(go, pathIndex);
+                monster = new Monster(go, pathIndex,ID);
                 break;
             default:
                 break;

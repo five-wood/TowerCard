@@ -2,19 +2,22 @@
 author:lin
 date:2018-10-03
 */
-using UnityEngine;
-using System.Collections;
 using System;
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.UI;
 
 public class MonsterMove : MonoBehaviour
 {
     public GameObject[] points;    //保存所有的路点
-    public float speed = 0.21f;//移动速度
-
-    private int currentPointIndex = 1;//记录下一个即将到达的路点
+    public float speed = 0.11f;//移动速度
+    public Monster monster;
+    public int currentPointIndex = 1;//记录下一个即将到达的路点
     private Quaternion quaternionZero = new Quaternion(0,0,0,0);
     private Vector3 direction = Vector3.zero;//移动方向 
     private int pathIndex = -1;
+
 
     public void setSpeed(float value) {
         speed = value;
@@ -49,7 +52,6 @@ public class MonsterMove : MonoBehaviour
             setPath(0);     
     }
 
-    // Update is called once per frame
     void Update()
     {
         //当游戏对象的位置距离目标点还有0.1m的时候
