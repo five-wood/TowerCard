@@ -6,7 +6,10 @@ using System.Text;
 
 public class SnowstormCard : Card {
     public float speedDownFactor = 0.8f;
-    public float damage = 3;
+    public float damage = 20;
+    public int target = -1;
+    public bool isUse = false;
+
     public SnowstormCard() {
         id = 1005;
         cost = 1;
@@ -22,9 +25,25 @@ public class SnowstormCard : Card {
     }
 
     public override void Action(int srcPlayerId = -1,int targetId = -1,ArrayList param = null) {
-
+        if(!isUse) {
+            SceneMgr.ins.UpdateMonsterSpeed(targetId, speedDownFactor);
+            SceneMgr.ins.AddMonsterHp(targetId, -damage);
+            target = targetId;
+            isUse = true;
+            SceneMgr.ins.AddCardEffectDelegate(UpdateMonsterAttr);
+        }
     }
 
     public override void Finish(int srcPlayerId = -1,int tagetId = -1,ArrayList param = null) {
+        isUse = false;
+        SceneMgr.ins.RemoveCardEffectDelegate(UpdateMonsterAttr);
+        target = -1;
+    }
+
+    public void UpdateMonsterAttr(int pathNum,Monster monster) {
+        if(pathNum == target) {
+            monster.MulSpeedFactor(speedDownFactor);
+            monster.AddHp(-damage);
+        }
     }
 }

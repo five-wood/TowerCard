@@ -4,21 +4,19 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-public class BlackCard : Card {
-
-    public BlackCard() {
-        id = 1012;
-        cost = 1;
-        name = "升级";
+public class GunTowerCard : Card {
+    public GunTowerCard() {
+        id = 10013;
+        name = "炮塔";
         state = CARD_STATE_ENABLED;
         tagList = new List<string>();
-
-        desc = "使某其他玩家的所有防御塔属性变为黑色，5秒";
-        existTime = 5;
+        tagList.Add("tower0");
+        tagList.Add("tower1");
+        tagList.Add("tower2");
+        tagList.Add("tower3");
     }
 
     public override void Action(int srcPlayerId = -1,int targetId = -1,ArrayList param = null) {
-
     }
 
     public override void Finish(int srcPlayerId = -1,int tagetId = -1,ArrayList param = null) {
